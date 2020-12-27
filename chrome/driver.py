@@ -12,6 +12,14 @@ class driver:
     
     def visitAndLogin(self, url):
         self.driver.get(url)
+        try:
+            bannerBtn = self.driver.find_element_by_xpath(
+                '//*[@id="lb_banner"]').click()
+        except:
+            pass
+        loginBtn = self.driver.find_element_by_xpath(
+            '//*[@id="header"]/div/div[1]/div[2]/ul/li[1]/a')
+        self.driver.execute_script("arguments[0].click();", loginBtn)
         return self
 
     def waitForLogin(self):
