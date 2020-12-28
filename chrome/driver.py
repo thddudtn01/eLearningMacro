@@ -5,6 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import time
 
+studyTime = 600
+
 class chrome:
     def __init__(self):
         self.driver = webdriver.Chrome(executable_path='./chromedriver.exe')
@@ -63,8 +65,17 @@ class chrome:
                 studyBtn = self.driver.find_element_by_xpath(
                     '//*[@id="lo_tag"]/li['+str(liCnt)+']/ol/li['+str(liCnt2+1)+']/div/div[2]/a')
                 self.driver.execute_script("arguments[0].click();", studyBtn)
-                time.sleep(3)
-
-                studyRoutine()
-
-        return soup
+                time.sleep(1.0)
+                self.driver.switch_to.frame('HkmcMainFrame')
+                time.sleep(1.0)
+                self.driver.switch_to.frame('cntntsFrame')
+                playBtn = self.driver.find_element_by_xpath('//*[@id="playBtn"]')
+                playBtn.click()
+                muteBtn = self.driver.find_element_by_xpath('//*[@id="muteBtn"]')
+                try:
+                    muteBtn.click()
+                except:
+                    pass
+                time.sleep(studyTime)
+                self.driver.switch_to.default_content()
+                time.sleep(1.0)
